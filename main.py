@@ -72,7 +72,7 @@ class Track_List:
         """Renames music files and orders music files"""
         for n in range(len(self._music_list)):
             music = self._music_list[n]
-            new_title: str = f'{n + 1}. {music.title} - {music.album} - {music.year}'
+            new_title: str = f'{n + 1}. {music.title}_{music.artist}_{music.album}_{music.year}'
             self._rename_music(music, new_title)
 
     def generate_report(self):
