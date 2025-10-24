@@ -55,6 +55,20 @@ class Track_List:
             total_length += track.length
         return total_length
 
+    @staticmethod
+    def _get_length_string(length: int) -> str:
+        """
+        Returns a string representation of the length in min:sec
+        :param length:
+        :return:
+        """
+        length_str = ''
+        if length % 60 > 9:
+            length_str = f'{length // 60:.0f}:{length % 60:.0f}'
+        else:
+            length_str = f'{length // 60:.0f}:0{length % 60:.0f}'
+        return length_str
+
     def _find_tracks(self) -> None:
         if not self._path.glob("*.mp3"):
             raise Exception(f"No .mp3 file found in {self._path}")
@@ -72,14 +86,14 @@ class Track_List:
         """Renames music files and orders music files"""
         for n in range(len(self._music_list)):
             music = self._music_list[n]
-            new_title: str = f'{n + 1}. {music.title}_{music.artist}_{music.album}_{music.year}'
+            new_title: str = f'{n + 1}. {music.title}_{music.artist}'
             self._rename_music(music, new_title)
 
     def generate_report(self):
         with open(self._path / "track-list.txt", "w") as file:
             file.write('Track List\n')
             file.write('Author: Sepehr Sahraian\n')
-            file.write(f'Total Length: {self.length // 60}\n')
+            file.write(f'Total Length: {Track_List._get_length_string(self.length)}\n')
             file.write(f'Number of Tracks: {len(self._music_list)}\n')
             file.write('---***---***---***---')
             file.write('\n')
@@ -90,7 +104,7 @@ class Track_List:
                 file.write(f'  Artist: {music.artist}\n')
                 file.write(f'  Album: {music.album}\n')
                 file.write(f'  Year: {music.year}\n')
-                file.write(f'  Length: {music.length // 60} min\n\n')
+                file.write(f'  Length: {Track_List._get_length_string(music.length)}\n\n')
 
 
 def main():
