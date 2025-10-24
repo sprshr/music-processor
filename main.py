@@ -86,7 +86,7 @@ class Track_List:
         """Renames music files and orders music files"""
         for n in range(len(self._music_list)):
             music = self._music_list[n]
-            new_title: str = f'{n + 1}. {music.title}_{music.artist}'
+            new_title: str = f'{n+1:02d}. {music.title}_{music.artist}'.replace('/', '-')
             self._rename_music(music, new_title)
 
     def generate_report(self):
@@ -100,7 +100,7 @@ class Track_List:
             file.write('\n')
             for n in range(len(self._music_list)):
                 music = self._music_list[n]
-                file.write(f'{n + 1}. {music.title}\n')
+                file.write(f'{n + 1:02d}. {music.title}\n')
                 file.write(f'  Artist: {music.artist}\n')
                 file.write(f'  Album: {music.album}\n')
                 file.write(f'  Year: {music.year}\n')
